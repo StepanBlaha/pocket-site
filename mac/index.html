@@ -1,39 +1,439 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pocket for Mac</title><link rel="icon" href="../icon.png"><style>
-:root{--green:#33C778;--ink:#0E3B26;--cream:#FAF5E6;--muted:#3d5c4b}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Pocket for Mac: Game Boy, DS, GameCube, Wii and 3DS on Apple Silicon</title>
+<meta name="description" content="Pocket for Mac plays the Game Boy, Game Boy Advance, DS, GameCube, Wii and 3DS games you own in one native Apple Silicon app. Safe saves, iPhone as a controller, rewind, cheats, RetroAchievements. Free, no ads.">
+<meta name="author" content="Stepan Blaha">
+<meta name="theme-color" content="#33C778">
+<meta name="color-scheme" content="light">
+<link rel="canonical" href="https://stepanblaha.github.io/pocket-site/mac/">
+<link rel="icon" href="../icon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="sitemap" type="application/xml" href="../sitemap.xml">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Pocket">
+<meta property="og:title" content="Pocket for Mac: every game you own, one native app">
+<meta property="og:description" content="Game Boy to Wii and 3DS in one Apple Silicon app. Safe saves, your iPhone as the controller. Free, no ads.">
+<meta property="og:url" content="https://stepanblaha.github.io/pocket-site/mac/">
+<meta property="og:image" content="https://stepanblaha.github.io/pocket-site/mac/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Pocket app icon on a green background">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pocket for Mac: every game you own, one native app">
+<meta name="twitter:description" content="Game Boy to Wii and 3DS in one Apple Silicon app. Free, no ads.">
+<meta name="twitter:image" content="https://stepanblaha.github.io/pocket-site/mac/og.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400..700&family=Silkscreen&display=swap">
+<link rel="preload" as="image" href="img/library.webp" type="image/webp">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"SoftwareApplication","name":"Pocket for Mac","alternateName":"Pocket: Handheld Game Player","applicationCategory":"GameApplication","operatingSystem":"macOS 14 or later (Apple Silicon)","url":"https://stepanblaha.github.io/pocket-site/mac/","image":"https://stepanblaha.github.io/pocket-site/mac/og.png","description":"A native Apple Silicon app that plays the Game Boy, Game Boy Color, Game Boy Advance, DS, GameCube, Wii and 3DS games you own, with safe saves, rewind, cheats, ROM-hack patching, RetroAchievements and your iPhone as a controller.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"Stepan Blaha"},"featureList":["Native Apple Silicon","Game Boy, Game Boy Color, Game Boy Advance, DS, GameCube, Wii and 3DS","iPhone as a controller with motion","Automatic in-game save backups","Rewind and adjustable fast-forward","Cheat codes","IPS, UPS and BPS ROM-hack patching","RetroAchievements","Saves shared with iPhone through iCloud Drive"]},
+ {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Pocket","item":"https://stepanblaha.github.io/pocket-site/"},{"@type":"ListItem","position":2,"name":"Pocket for Mac","item":"https://stepanblaha.github.io/pocket-site/mac/"}]},
+ {"@type":"FAQPage","mainEntity":[
+  {"@type":"Question","name":"Is Pocket for Mac free?","acceptedAnswer":{"@type":"Answer","text":"Yes. No ads, no subscription, no account and nothing locked behind a payment."}},
+  {"@type":"Question","name":"Are games included?","acceptedAnswer":{"@type":"Answer","text":"No. Pocket plays the games you own. You add your own game files and Pocket organises them."}},
+  {"@type":"Question","name":"Which systems does Pocket for Mac play?","acceptedAnswer":{"@type":"Answer","text":"Game Boy, Game Boy Color, Game Boy Advance, Nintendo DS, GameCube, Wii and Nintendo 3DS."}},
+  {"@type":"Question","name":"Does it run on Intel Macs or need Rosetta?","acceptedAnswer":{"@type":"Answer","text":"Pocket is built natively for Apple Silicon (M1 and later) and needs macOS 14 Sonoma or later. It does not use Rosetta and does not run on Intel Macs."}},
+  {"@type":"Question","name":"Can I bring saves from another emulator?","acceptedAnswer":{"@type":"Answer","text":"Yes. Pocket imports and exports plain .sav files, and backs up your current save before replacing it."}},
+  {"@type":"Question","name":"When can I download it?","acceptedAnswer":{"@type":"Answer","text":"Soon. Pocket for Mac will be signed and notarized by Apple so it opens without warnings. Email to get a note when it is out."}}
+ ]}
+]}
+</script>
+
+<style>
+:root{
+  --green:#33C778;--green-d:#22a862;--mint:#d9f5e5;--ink:#0E3B26;--ink-2:#13472f;--cream:#FAF5E6;--paper:#fffdf6;--muted:#3d5c4b;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;--body:"Figtree",ui-sans-serif,system-ui,sans-serif;--pixel:"Silkscreen",ui-monospace,monospace;
+  --shadow:6px 6px 0 var(--ink);--r:22px;--gut:max(16px,4vw);--max:1200px;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--cream);color:var(--ink);font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-header{background:var(--green);padding:28px 16px}
-header .in,main{max-width:720px;margin:0 auto}
-header a{display:flex;align-items:center;gap:14px;color:var(--ink);text-decoration:none;font-weight:800;font-size:28px}
-header img{width:56px;height:56px;border-radius:13px;box-shadow:4px 4px 0 var(--ink)}
-main{padding:32px 16px 64px}
-h1{font-size:34px;line-height:1.2;margin:0 0 6px}
-h2{font-size:21px;margin:34px 0 6px;padding-top:18px;border-top:2px dashed rgba(14,59,38,.25)}
-p,li{color:var(--muted)} a{color:#16784a}
-.meta{color:var(--muted);font-size:15px;margin:0 0 20px}
-nav{display:flex;gap:18px;flex-wrap:wrap;margin-top:40px;font-size:15px}
-img.shot{width:100%;height:auto;border-radius:14px;margin:18px 0 6px;box-shadow:6px 6px 0 var(--ink)}
-.btn{display:inline-block;background:var(--ink);color:var(--cream);padding:12px 20px;border-radius:999px;font-weight:700;text-decoration:none;margin:8px 0}
-ul{padding-left:20px}</style></head>
-<body><header><div class="in"><a href="../"><img src="../icon.png" alt="">Pocket</a></div></header>
-<main><h1>Pocket for Mac</h1>
-<p class="meta">Every handheld and home console game you own, in one native Apple Silicon app.</p>
-<p>Pocket for Mac plays Game Boy, Game Boy Color, Game Boy Advance and DS games built in, plus GameCube, Wii and 3DS. One library, one place for your saves, no setup of separate emulators.</p>
-<img class="shot" src="01-library.jpg" alt="Pocket's library on a Mac: a featured game and a shelf of recently played games">
-<h2>Why Pocket</h2>
-<ul>
-<li>Runs natively on Apple Silicon. No Rosetta.</li>
-<li>Saves you don't have to think about: your exact spot, extra slots, a second run per game, automatic backups every 10 minutes.</li>
-<li>Your iPhone becomes the controller: scan a QR code and play, with motion controls for Wii games.</li>
-<li>The same saves on Mac and iPhone through your own iCloud Drive.</li>
-<li>Rewind, fast-forward, cheats, ROM-hack patching (IPS, UPS, BPS) and RetroAchievements.</li>
-<li>Free. No ads, no account needed.</li>
-</ul>
-<img class="shot" src="03-3d.jpg" alt="A 3D homebrew game running in Pocket on a Mac">
-<img class="shot" src="04-controller.jpg" alt="Pocket's Phone Controller window with a QR code to scan with an iPhone">
-<h2>Download</h2>
-<p>Pocket for Mac is coming soon, signed and notarized by Apple so it opens without warnings. Want to know when it's out? <a href="mailto:stepa15.b@gmail.com?subject=Pocket%20for%20Mac">Email me</a> and I'll let you know.</p>
-<p>No games are included. Pocket plays the games you own.</p>
-<nav><a href="../">Home</a><a href="../mac/">Mac</a><a href="../support/">Support</a><a href="../privacy/">Privacy policy</a></nav></main></body></html>
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--cream);color:var(--ink);font:400 18px/1.6 var(--body);overflow-x:clip}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--cream);padding:10px 14px;border-radius:10px;z-index:100}
+.skip:focus{left:8px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.03em;line-height:1;margin:0}
+h2{font-size:clamp(40px,6.4vw,88px)}
+h3{font-size:clamp(22px,2.2vw,28px);letter-spacing:-.02em;line-height:1.1}
+p{margin:0}
+.lede{font-size:clamp(18px,1.6vw,21px);color:var(--muted);max-width:56ch}
+
+/* grain */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.06;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* buttons */
+.btn{--bg:var(--ink);--fg:var(--cream);display:inline-flex;align-items:center;gap:10px;background:var(--bg);color:var(--fg);font:700 17px/1 var(--body);text-decoration:none;padding:16px 22px;border-radius:999px;border:2.5px solid var(--ink);box-shadow:4px 4px 0 var(--ink);transition:transform .18s ease,box-shadow .18s ease,background-color .18s ease,color .18s ease;white-space:nowrap}
+.btn.light{--bg:var(--paper);--fg:var(--ink)}
+.btn.green{--bg:var(--green);--fg:var(--ink)}
+.btn svg{width:18px;height:18px;flex:none}
+@media (hover:hover) and (pointer:fine){
+  .btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+  .btn:not(.light):not(.green):hover{--bg:#071f14}
+  .btn.light:hover{--bg:var(--ink);--fg:var(--cream)}
+  .btn.green:hover{--bg:var(--ink);--fg:var(--green)}
+}
+.btn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--ink)}
+
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:14px var(--gut);transition:transform .35s ease}
+.nav.hide{transform:translateY(-110%)}
+.nav .bar{max-width:var(--max);margin:0 auto;display:flex;align-items:center;gap:20px;background:rgba(250,245,230,.86);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:2.5px solid var(--ink);border-radius:999px;padding:8px 8px 8px 10px;box-shadow:4px 4px 0 var(--ink)}
+.logo{display:flex;align-items:center;gap:10px;font:800 22px/1 var(--display);letter-spacing:-.03em;text-decoration:none}
+.logo img{width:38px;height:38px;border-radius:10px}
+.logo small{font:400 12px/1 var(--pixel);letter-spacing:0;background:var(--green);border:2px solid var(--ink);padding:4px 6px 3px;border-radius:6px}
+.nav ul{display:flex;gap:4px;list-style:none;margin:0 0 0 auto;padding:0}
+.nav ul a{display:block;padding:10px 14px;border-radius:999px;text-decoration:none;font-weight:600;font-size:16px;transition:background-color .15s,color .15s}
+@media (hover:hover) and (pointer:fine){.nav ul a:hover{background:var(--ink);color:var(--cream)}}
+.nav .btn{padding:12px 18px;font-size:15px;box-shadow:none}
+@media (max-width:760px){.nav ul{display:none}.nav .btn{margin-left:auto}}
+@media (max-width:380px){.logo small{display:none}}
+
+/* hero */
+.hero{position:relative;padding:150px 0 0;overflow:clip}
+.band{position:relative}
+.band::before{content:"";position:absolute;left:50%;width:100vw;transform:translateX(-50%);top:clamp(40px,5vw,60px);bottom:calc(-1 * clamp(60px,9vw,120px));background:var(--green);border-top:2.5px solid var(--ink)}
+.hero .wrap{position:relative;text-align:center}
+.hero h1{font-size:clamp(52px,10vw,148px);letter-spacing:-.05em;line-height:.92}
+.hero h1 .ln{display:block;overflow:hidden;padding:.04em .12em .16em;margin:0 -.12em -.1em}
+.hero h1 .ln>span{display:inline-block;animation:rise 1s cubic-bezier(.2,.8,.2,1) both}
+.hero h1 .ln:nth-child(2)>span{animation-delay:.12s}
+.hero h1 em{font-style:normal;color:var(--green);-webkit-text-stroke:2.5px var(--ink);paint-order:stroke fill;text-shadow:5px 5px 0 var(--ink)}
+.hero .lede{margin:26px auto 0;text-align:center;animation:fade .9s .35s both}
+.ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px;animation:fade .9s .45s both}
+.fine{font-size:15px;color:var(--muted);margin-top:16px;animation:fade .9s .55s both}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+@keyframes fade{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes drop{from{opacity:0;transform:translateY(-60px) rotate(var(--rot,0deg))}to{opacity:1;transform:rotate(var(--rot,0deg))}}
+
+.carts{display:flex;justify-content:center;gap:clamp(6px,1.2vw,16px);margin:54px auto -22px;position:relative;z-index:3;flex-wrap:wrap;max-width:900px}
+.cart{width:clamp(70px,9vw,104px)}
+.cart>div{--rot:0deg;aspect-ratio:5/6;background:var(--c,#cfd3cc);border:2.5px solid var(--ink);border-radius:8px 18px 8px 8px;box-shadow:4px 4px 0 var(--ink);padding:9px 8px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;animation:drop .8s cubic-bezier(.3,1.4,.5,1) both;animation-delay:calc(.5s + var(--i) * .06s)}
+.cart>div::before{content:"";position:absolute;top:8px;left:8px;right:8px;height:6px;background:repeating-linear-gradient(90deg,rgba(14,59,38,.35) 0 3px,transparent 3px 7px);border-radius:2px}
+.cart b{display:block;background:var(--paper);border:2px solid var(--ink);border-radius:5px;font:400 clamp(10px,1.2vw,14px)/1.1 var(--pixel);text-align:center;padding:7px 2px 6px;color:var(--ink)}
+.cart span,.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+.mac{position:relative;z-index:2;max-width:1080px;margin:0 auto;perspective:1600px}
+.mac .screen{border:2.5px solid var(--ink);border-radius:var(--r);overflow:hidden;box-shadow:10px 10px 0 var(--ink);background:#1e1f1e;transform-origin:50% 0}
+.mac .screen img{width:100%}
+.hero .spacer{height:clamp(60px,9vw,120px)}
+
+/* marquee */
+.marquee{background:var(--ink);color:var(--cream);border-block:2.5px solid var(--ink);overflow:hidden;padding:20px 0;position:relative;z-index:4}
+.marquee .track{display:flex;width:max-content}
+.marquee .row{display:flex;align-items:center;gap:34px;padding-right:34px;font:800 clamp(28px,4vw,48px)/1 var(--display);letter-spacing:-.02em;white-space:nowrap}
+.marquee .row i{width:16px;height:16px;background:var(--green);display:inline-block;box-shadow:0 0 0 2px var(--cream);image-rendering:pixelated;clip-path:polygon(33% 0,66% 0,66% 33%,100% 33%,100% 66%,66% 66%,66% 100%,33% 100%,33% 66%,0 66%,0 33%,33% 33%)}
+
+/* section heads */
+section{position:relative}
+.head{display:grid;grid-template-columns:1.25fr 1fr;gap:28px 48px;align-items:end;margin-bottom:56px}
+.head .lede{justify-self:end}
+@media (max-width:860px){.head{grid-template-columns:1fr}.head .lede{justify-self:start}}
+.pad{padding:clamp(96px,12vw,160px) 0}
+
+/* tour (horizontal) */
+.tour{background:var(--cream)}
+.tour .head{margin-bottom:0;padding-bottom:48px}
+.tour-viewport{overflow:hidden}
+.track-h{display:flex;gap:28px;padding:0 var(--gut) 8px;width:max-content}
+.panel{width:min(78vw,980px,calc((100svh - 400px) * 1.6));flex:none;display:grid;grid-template-rows:auto 1fr;gap:20px}
+.panel figure{margin:0;border:2.5px solid var(--ink);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);background:#1e1f1e;aspect-ratio:16/10}
+.panel figure img{width:100%;height:100%;object-fit:cover;object-position:top left}
+.panel .cap{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:baseline}
+.panel .n{font:400 14px/1 var(--pixel);background:var(--green);border:2px solid var(--ink);border-radius:6px;padding:6px 7px 5px;grid-row:span 2;align-self:start}
+.panel .cap p{color:var(--muted);max-width:60ch}
+.panel.saves{width:min(78vw,560px)}
+@media (min-width:900px){.tour.pad{padding:110px 0 60px}.tour .head{padding-bottom:32px}.tour h2{font-size:clamp(40px,5vw,72px)}}
+.savecard{background:var(--ink);color:var(--cream);border:2.5px solid var(--ink);border-radius:var(--r);box-shadow:6px 6px 0 var(--green-d);padding:clamp(24px,3vw,40px);aspect-ratio:auto;display:flex;flex-direction:column;gap:16px;height:100%}
+.savecard h3{font-size:clamp(30px,3.4vw,46px);color:var(--green)}
+.savecard ul{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.savecard li{display:flex;gap:14px;align-items:flex-start;font-size:18px;line-height:1.4;padding:14px 16px;background:var(--ink-2);border:2px solid rgba(250,245,230,.18);border-radius:14px}
+.savecard li svg{width:22px;height:22px;flex:none;color:var(--green);margin-top:1px}
+@media (max-width:899px){
+  .tour-viewport{overflow:visible}
+  .track-h{flex-direction:column;width:auto;gap:56px}
+  .panel,.panel.saves{width:100%}
+}
+
+/* controller */
+.ctrl{background:var(--green);border-block:2.5px solid var(--ink);overflow:clip}
+.ctrl h2{max-width:11ch}
+.ctrl .lede{color:var(--ink)}
+.stage{position:relative;display:grid;grid-template-columns:minmax(0,.62fr) minmax(0,1fr);gap:clamp(40px,9vw,140px);align-items:center;max-width:1040px;margin:0 auto}
+.phone{position:relative;justify-self:end;width:min(100%,290px);border:2.5px solid var(--ink);border-radius:46px;background:#0b0b0b;padding:11px;box-shadow:8px 8px 0 var(--ink)}
+.phone img{border-radius:36px;width:100%}
+.phone::before{content:"";position:absolute;top:22px;left:50%;width:82px;height:22px;background:#0b0b0b;border-radius:20px;transform:translateX(-50%);z-index:2}
+.qrwin{border:2.5px solid var(--ink);border-radius:var(--r);overflow:hidden;box-shadow:8px 8px 0 var(--ink);background:#1e1f1e;max-width:440px}
+.wire{position:absolute;inset:0;pointer-events:none;overflow:visible}
+.wire path{fill:none;stroke:var(--ink);stroke-width:3;stroke-dasharray:10 10;animation:march 1s linear infinite}
+@keyframes march{to{stroke-dashoffset:-20}}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:72px;counter-reset:s}
+.step{background:var(--paper);border:2.5px solid var(--ink);border-radius:18px;padding:22px;box-shadow:4px 4px 0 var(--ink);counter-increment:s}
+.step::before{content:counter(s);display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--ink);color:var(--green);font:400 18px/1 var(--pixel);margin-bottom:14px}
+.step p{color:var(--muted);font-size:17px}
+.step strong{color:var(--ink);display:block;font:800 21px/1.15 var(--display);letter-spacing:-.01em;margin-bottom:6px}
+.aside{margin-top:22px;font-size:16px;color:var(--ink);text-align:center}
+@media (max-width:760px){
+  .stage{grid-template-columns:1fr 1fr;gap:16px}
+  .phone{border-radius:30px;padding:7px}.phone img{border-radius:24px}.phone::before{top:14px;width:50px;height:14px}
+  .steps{grid-template-columns:1fr}
+  .wire{display:none}
+}
+
+/* bento */
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:18px}
+.card{grid-column:span 2;background:var(--paper);border:2.5px solid var(--ink);border-radius:var(--r);padding:26px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;min-height:220px;transition:background-color .2s,color .2s}
+.card.wide{grid-column:span 3}
+.card .ic{width:52px;height:52px;border-radius:14px;border:2.5px solid var(--ink);background:var(--green);display:grid;place-items:center;transition:background-color .2s}
+.card .ic svg{width:26px;height:26px;color:var(--ink)}
+.card p{color:var(--muted);transition:color .2s}
+.card h3{margin-top:auto}
+.card.dark{background:var(--ink);color:var(--cream)}
+.card.dark p{color:rgba(250,245,230,.78)}
+.card.dark .ic{background:var(--cream)}
+@media (hover:hover) and (pointer:fine){
+  .card:not(.dark):hover{background:var(--ink);color:var(--cream)}
+  .card:not(.dark):hover p{color:rgba(250,245,230,.78)}
+  .card:not(.dark):hover .ic{background:var(--cream)}
+  .card.dark:hover{background:var(--ink-2)}
+}
+@media (max-width:980px){.card,.card.wide{grid-column:span 3}}
+@media (max-width:620px){.card,.card.wide{grid-column:span 6;min-height:0}}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border:2.5px solid var(--ink);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);background:var(--paper);margin-top:64px}
+.stat{padding:30px 24px;border-left:2.5px solid var(--ink)}
+.stat:first-child{border-left:0}
+.stat b{display:block;font:800 clamp(52px,6vw,84px)/.9 var(--display);letter-spacing:-.05em}
+.stat span{display:block;margin-top:10px;color:var(--muted);font-size:16px}
+@media (max-width:760px){.stats{grid-template-columns:1fr 1fr}.stat:nth-child(3){border-left:0}.stat:nth-child(n+3){border-top:2.5px solid var(--ink)}}
+
+/* specs + faq */
+.specs{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:96px}
+.spec{border-top:2.5px solid var(--ink);padding-top:18px}
+.spec small{display:block;font:400 13px/1 var(--pixel);color:var(--green-d);margin-bottom:10px}
+.spec p{font:700 22px/1.25 var(--display);letter-spacing:-.01em}
+@media (max-width:760px){.specs{grid-template-columns:1fr}}
+.faq{max-width:860px}
+.faq details{border-bottom:2.5px solid var(--ink)}
+.faq details:first-of-type{border-top:2.5px solid var(--ink)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 0;font:800 clamp(20px,2.2vw,26px)/1.2 var(--display);letter-spacing:-.015em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary i{flex:none;width:36px;height:36px;border:2.5px solid var(--ink);border-radius:10px;display:grid;place-items:center;transition:transform .3s ease,background-color .2s}
+.faq summary i::before{content:"+";font:800 22px/1 var(--display);font-style:normal}
+.faq details[open] summary i{transform:rotate(45deg);background:var(--green)}
+.faq .ans{overflow:hidden}
+.faq .ans p{padding:0 0 24px;color:var(--muted);max-width:66ch}
+@media (hover:hover) and (pointer:fine){.faq summary:hover i{background:var(--green)}}
+
+/* final cta */
+.final{background:var(--ink);color:var(--cream);text-align:center;overflow:clip}
+.final h2{font-size:clamp(48px,9vw,132px);letter-spacing:-.05em}
+.final h2 span{color:var(--green)}
+.final .lede{color:rgba(250,245,230,.8);margin:24px auto 0;text-align:center}
+.final .ctas{animation:none}
+.final .big-icon{width:clamp(96px,12vw,150px);margin:0 auto 34px;border-radius:28%;box-shadow:8px 8px 0 var(--green)}
+
+footer{background:var(--ink);color:rgba(250,245,230,.75);border-top:2.5px dashed rgba(250,245,230,.2);padding:36px 0 calc(36px + env(safe-area-inset-bottom));font-size:15px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px 28px;justify-content:space-between;align-items:center}
+footer nav{display:flex;flex-wrap:wrap;gap:6px 22px}
+footer a{color:var(--cream);text-decoration-color:rgba(250,245,230,.35);text-underline-offset:3px}
+@media (hover:hover) and (pointer:fine){footer a:hover{color:var(--green)}}
+footer .legal{flex-basis:100%;font-size:13px;color:rgba(250,245,230,.55)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@5.0.1/bundled/locomotive-scroll.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="bar">
+    <a class="logo" href="../" aria-label="Pocket home"><img src="../icon.png" alt="" width="38" height="38">Pocket <small>MAC</small></a>
+    <ul>
+      <li><a href="#tour">Tour</a></li>
+      <li><a href="#controller">Controller</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a class="btn" href="mailto:stepa15.b@gmail.com?subject=Pocket%20for%20Mac">Get notified</a>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap">
+    <h1 id="h1" data-scroll data-scroll-speed="0.12"><span class="ln"><span>Every game you own.</span></span><span class="ln"><span>One <em>Mac</em> app.</span></span></h1>
+    <p class="lede">Pocket plays Game Boy, Game Boy Advance, DS, GameCube, Wii and 3DS games in one native Apple Silicon app. Your saves stay safe, your iPhone becomes the controller, and it costs nothing.</p>
+    <div class="ctas">
+      <a class="btn green" href="mailto:stepa15.b@gmail.com?subject=Pocket%20for%20Mac"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/><path d="M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/></svg>Tell me when it's out</a>
+      <a class="btn light" href="#tour">Take the tour</a>
+    </div>
+    <p class="fine">Free. No ads, no account. macOS 14 or later on Apple Silicon.</p>
+
+    <div class="band">
+    <div class="carts" role="list" aria-label="Systems Pocket plays">
+      <div class="cart" role="listitem"><div style="--i:0;--c:#c9cdc3;--rot:-4deg"><b>GB</b></div><span>Game Boy</span></div>
+      <div class="cart" role="listitem"><div style="--i:1;--c:#ffd23f;--rot:3deg"><b>GBC</b></div><span>Game Boy Color</span></div>
+      <div class="cart" role="listitem"><div style="--i:2;--c:#7c6cf2;--rot:-2deg"><b>GBA</b></div><span>Game Boy Advance</span></div>
+      <div class="cart" role="listitem"><div style="--i:3;--c:#f2f2ee;--rot:4deg"><b>DS</b></div><span>Nintendo DS</span></div>
+      <div class="cart" role="listitem"><div style="--i:4;--c:#8a7fd6;--rot:-3deg"><b>GC</b></div><span>GameCube</span></div>
+      <div class="cart" role="listitem"><div style="--i:5;--c:#9fe0ff;--rot:2deg"><b>WII</b></div><span>Wii</span></div>
+      <div class="cart" role="listitem"><div style="--i:6;--c:#ff6b5e;--rot:-5deg"><b>3DS</b></div><span>Nintendo 3DS</span></div>
+    </div>
+
+    <div class="mac" id="heroMac">
+      <div class="screen"><img src="img/library.webp" width="1600" height="985" alt="Pocket's library on a Mac: a featured game ready to continue and a shelf of recently played homebrew games for Game Boy, GameCube and 3DS" fetchpriority="high"></div>
+    </div>
+    </div>
+  </div>
+  <div class="spacer"></div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="track" id="marquee">
+    <div class="row"><span>Game Boy</span><i></i><span>Game Boy Color</span><i></i><span>Game Boy Advance</span><i></i><span>Nintendo DS</span><i></i><span>GameCube</span><i></i><span>Wii</span><i></i><span>Nintendo 3DS</span><i></i></div>
+    <div class="row"><span>Game Boy</span><i></i><span>Game Boy Color</span><i></i><span>Game Boy Advance</span><i></i><span>Nintendo DS</span><i></i><span>GameCube</span><i></i><span>Wii</span><i></i><span>Nintendo 3DS</span><i></i></div>
+  </div>
+</div>
+
+<section class="tour pad" id="tour" aria-labelledby="tour-h">
+  <div class="wrap head">
+    <h2 id="tour-h" data-reveal>One shelf. Seven systems.</h2>
+    <p class="lede" data-reveal>No separate emulators to set up, no folders of loose files. Add your games once and Pocket keeps them, their covers and their saves together.</p>
+  </div>
+  <div class="tour-viewport" id="tourPin">
+    <div class="track-h" id="tourTrack">
+      <article class="panel">
+        <figure><img src="img/library.webp" width="1600" height="985" loading="lazy" alt="Pocket's home screen on a Mac with the last played game and a Recently Played shelf"></figure>
+        <div class="cap"><span class="n">01</span><h3>Pick up where you left off</h3><p>The game you played last sits on top with a big Continue button. Everything else waits on the shelf below.</p></div>
+      </article>
+      <article class="panel">
+        <figure><img src="img/grid.webp" width="1600" height="985" loading="lazy" alt="Pocket's All Games grid with cover art, sorted by recently played"></figure>
+        <div class="cap"><span class="n">02</span><h3>Every game at a glance</h3><p>Covers, sorting, search and favourites. ROM hacks get a shelf of their own, and each system has its own section in the sidebar.</p></div>
+      </article>
+      <article class="panel">
+        <figure><img src="img/game3d.webp" width="1200" height="1029" loading="lazy" alt="A 3D homebrew GameCube game running in a Pocket window"></figure>
+        <div class="cap"><span class="n">03</span><h3>Up to GameCube, Wii and 3DS</h3><p>The big consoles run right next to your handhelds, with the same library, the same saves and the same controls.</p></div>
+      </article>
+      <article class="panel saves">
+        <div class="savecard">
+          <h3>Saves you never have to think about.</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Exit never overwrites your progress.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Your exact spot, plus extra save slots.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>A second run for every game, with its own saves.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Your in-game save is backed up every 10 minutes, and you can restore any backup.</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="ctrl pad" id="controller" aria-labelledby="ctrl-h">
+  <div class="wrap">
+    <div class="head">
+      <h2 id="ctrl-h" data-reveal>Your iPhone is the controller.</h2>
+      <p class="lede" data-reveal>Scan a code and your phone turns into a gamepad with buttons, haptics and motion. Point it at the screen for Wii games. Nothing to pair, no extra hardware.</p>
+    </div>
+    <div class="stage" id="stage">
+      <svg class="wire" aria-hidden="true"><path id="wirePath" d=""/></svg>
+      <div class="phone" id="phone"><img src="img/remote.webp" width="520" height="1134" loading="lazy" alt="Pocket on iPhone used as a controller: d-pad, A, B, plus, minus, home, 1 and 2 buttons, with a Motion switch"></div>
+      <div class="qrwin" id="qrwin"><img src="img/qr.webp" width="800" height="1024" loading="lazy" alt="Pocket's Phone Controller window on the Mac showing a QR code and three short steps"></div>
+    </div>
+    <div class="steps">
+      <div class="step" data-reveal><strong>Open Phone Controller</strong><p>On the Mac, choose File, then Phone Controller. A QR code appears.</p></div>
+      <div class="step" data-reveal><strong>Scan it</strong><p>In Pocket on iPhone, tap Use as Controller and point the camera at the code.</p></div>
+      <div class="step" data-reveal><strong>Play</strong><p>Buttons, haptics and motion work in every game, Wii, GameCube and 3DS included.</p></div>
+    </div>
+    <p class="aside">No Pocket on the phone? Scan with the camera app for buttons in the browser. Bluetooth controllers like DualSense, Xbox and Switch Pro work too.</p>
+  </div>
+</section>
+
+<section class="pad" id="features" aria-labelledby="feat-h">
+  <div class="wrap">
+    <div class="head">
+      <h2 id="feat-h" data-reveal>All the good stuff. None of the catches.</h2>
+      <p class="lede" data-reveal>The features people pay for elsewhere, built in and free. No ads during play, no subscription, nothing locked.</p>
+    </div>
+    <div class="grid">
+      <div class="card" data-reveal><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></div><h3>Rewind</h3><p>Missed a jump? Hold to go back a few seconds and try again.</p></div>
+      <div class="card" data-reveal><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 19V5l9 7z"/><path d="M2 19V5l9 7z"/></svg></div><h3>Fast-forward</h3><p>Skip the grind at the speed you pick, not one fixed speed.</p></div>
+      <div class="card" data-reveal><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M19 14v4"/><path d="M10 2v2"/><path d="M7 8H3"/><path d="M21 16h-4"/><path d="M11 3H9"/></svg></div><h3>Cheats</h3><p>Type GameShark, Action Replay and CodeBreaker codes and switch them on and off anytime.</p></div>
+      <div class="card wide dark" data-reveal><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z"/></svg></div><h3>ROM hacks, patched for you</h3><p>Add an IPS, UPS or BPS patch and Pocket finds the right base game and builds the hack. No separate patching tool, and it checks the result before saving it.</p></div>
+      <div class="card wide" data-reveal><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978"/><path d="M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978"/><path d="M18 9h1.5a1 1 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"/><path d="M6 9H4.5a1 1 0 0 1 0-5H6"/></svg></div><h3>RetroAchievements</h3><p>Sign in with your RetroAchievements account and unlock achievements as you play, with a pop-up for each one and a list per game.</p></div>
+      <div class="card" data-reveal><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></div><h3>Mac and iPhone saves</h3><p>Your saves travel between Pocket on Mac and iPhone through your own iCloud Drive.</p></div>
+      <div class="card" data-reveal><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg></div><h3>Native Apple Silicon</h3><p>Built for M‑series Macs. No Rosetta, no Intel leftovers.</p></div>
+      <div class="card" data-reveal><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 13v8"/><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="m8 17 4-4 4 4"/></svg></div><h3>Your saves, your files</h3><p>Plain .sav files in and out. Bring saves from another emulator, take them anywhere.</p></div>
+    </div>
+
+    <div class="stats" aria-label="Pocket in numbers">
+      <div class="stat"><b data-count="7">7</b><span>systems in one app</span></div>
+      <div class="stat"><b data-count="10">10</b><span>minutes between save backups</span></div>
+      <div class="stat"><b data-count="0">0</b><span>ads, subscriptions or accounts</span></div>
+      <div class="stat"><b data-count="1">1</b><span>library for all of it</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" id="faq" aria-labelledby="faq-h" style="padding-top:0">
+  <div class="wrap">
+    <div class="specs">
+      <div class="spec" data-reveal><small>MAC</small><p>Apple Silicon, M1 or later</p></div>
+      <div class="spec" data-reveal><small>SYSTEM</small><p>macOS 14 Sonoma or later</p></div>
+      <div class="spec" data-reveal><small>GAMES</small><p>Your own game files. None are included.</p></div>
+    </div>
+    <div class="head"><h2 id="faq-h" data-reveal>Questions</h2></div>
+    <div class="faq">
+      <details><summary>Is Pocket for Mac free?<i aria-hidden="true"></i></summary><div class="ans"><p>Yes. No ads, no subscription, no account and nothing locked behind a payment.</p></div></details>
+      <details><summary>Are games included?<i aria-hidden="true"></i></summary><div class="ans"><p>No. Pocket plays the games you own. Add your own game files and Pocket sorts them, finds covers and keeps their saves.</p></div></details>
+      <details><summary>Which systems does it play?<i aria-hidden="true"></i></summary><div class="ans"><p>Game Boy, Game Boy Color, Game Boy Advance, Nintendo DS, GameCube, Wii and Nintendo 3DS.</p></div></details>
+      <details><summary>Does it run on Intel Macs or need Rosetta?<i aria-hidden="true"></i></summary><div class="ans"><p>Pocket is built natively for Apple Silicon (M1 and later) and needs macOS 14 Sonoma or later. It does not use Rosetta and does not run on Intel Macs.</p></div></details>
+      <details><summary>Can I bring saves from another emulator?<i aria-hidden="true"></i></summary><div class="ans"><p>Yes. Pocket imports and exports plain .sav files, and backs up your current save before replacing it.</p></div></details>
+      <details><summary>Is there an iPhone version?<i aria-hidden="true"></i></summary><div class="ans"><p>Yes. Pocket for iPhone and iPad plays Game Boy, Game Boy Color, Game Boy Advance and DS games, shares saves with the Mac and doubles as the Mac's controller. It is coming to the App Store.</p></div></details>
+      <details><summary>When can I download it?<i aria-hidden="true"></i></summary><div class="ans"><p>Soon. Pocket for Mac will be signed and notarized by Apple so it opens without warnings. <a href="mailto:stepa15.b@gmail.com?subject=Pocket%20for%20Mac">Email me</a> and you'll get a note the day it's out.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="final pad" aria-labelledby="final-h">
+  <div class="wrap">
+    <img class="big-icon" src="../icon.png" width="150" height="150" alt="" loading="lazy">
+    <h2 id="final-h" data-reveal>Coming soon <span>to your Mac.</span></h2>
+    <p class="lede" data-reveal>Signed and notarized by Apple, so it opens like any other app. Leave your email and you'll hear first.</p>
+    <div class="ctas" data-reveal>
+      <a class="btn green" href="mailto:stepa15.b@gmail.com?subject=Pocket%20for%20Mac">Tell me when it's out</a>
+      <a class="btn light" href="../support/">Support</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="../" style="color:var(--cream)"><img src="../icon.png" alt="" width="38" height="38" loading="lazy">Pocket</a>
+    <nav aria-label="Footer"><a href="../">Home</a><a href="../mac/">Mac</a><a href="../support/">Support</a><a href="../privacy/">Privacy policy</a><a href="mailto:stepa15.b@gmail.com">Contact</a></nav>
+    <p class="legal">© <span id="year">2026</span> Stepan Blaha. Game Boy, Nintendo DS, GameCube, Wii and Nintendo 3DS are trademarks of Nintendo. Pocket is not affiliated with or endorsed by Nintendo. No games are included.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@5.0.1/bundled/locomotive-scroll.min.js" defer></script>
+<script src="site.js" defer></script>
+</body>
+</html>
