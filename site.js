@@ -1,12 +1,14 @@
 (() => {
-  document.getElementById('year').textContent = new Date().getFullYear();
+  const $ = s => document.querySelector(s); // sections differ per page: every effect below checks its element exists
+  $('#year').textContent = new Date().getFullYear();
 
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const { gsap, ScrollTrigger, LocomotiveScroll } = window;
 
   // Wire between phone and Mac window (drawn on any layout change).
-  const stage = document.getElementById('stage'), wire = document.getElementById('wirePath');
+  const stage = $('#stage'), wire = $('#wirePath');
   const drawWire = () => {
+    if (!stage || !wire) return;
     const s = stage.getBoundingClientRect(), p = document.getElementById('phone').getBoundingClientRect(), q = document.getElementById('qrwin').getBoundingClientRect();
     const x1 = p.right - s.left, y1 = p.top - s.top + p.height * .3, x2 = q.left - s.left, y2 = q.top - s.top + q.height * .32;
     const mx = (x1 + x2) / 2;
@@ -53,18 +55,25 @@
   const nav = document.getElementById('nav');
   ScrollTrigger.create({ start: 120, end: 'max', onUpdate: s => nav.classList.toggle('hide', s.direction === 1) });
 
-  // Hero: the Mac window tilts back and flattens as you scroll; cartridges fall into it.
-  gsap.fromTo('#heroMac .screen', { rotateX: 16, scale: .9, y: 30 }, {
+  // Hero (Mac page): the Mac window tilts back and flattens as you scroll; cartridges fall into it.
+  if ($('#heroMac')) gsap.fromTo('#heroMac .screen', { rotateX: 16, scale: .9, y: 30 }, {
     rotateX: 0, scale: 1, y: 0, ease: 'none',
     scrollTrigger: { trigger: '#heroMac', start: 'top 95%', end: 'top 25%', scrub: true }
   });
-  gsap.timeline({ scrollTrigger: { trigger: '.carts', start: 'top 60%', end: 'top -10%', scrub: true } })
+  // Hero (home page): the phones fan out as you scroll.
+  if ($('#heroPhones')) {
+    const t = { trigger: '#heroPhones', start: 'top 85%', end: 'top 15%', scrub: true };
+    gsap.fromTo('#heroPhones .ph.l', { x: 90, rotate: -2 }, { x: 0, rotate: -9, ease: 'none', scrollTrigger: t });
+    gsap.fromTo('#heroPhones .ph.r', { x: -90, rotate: 2 }, { x: 0, rotate: 9, ease: 'none', scrollTrigger: t });
+    gsap.fromTo('#heroPhones .ph.c', { y: 40, scale: .94 }, { y: 0, scale: 1, ease: 'none', scrollTrigger: t });
+  }
+  if ($('.carts')) gsap.timeline({ scrollTrigger: { trigger: '.carts', start: 'top 60%', end: 'top -10%', scrub: true } })
     .to('.cart', { y: (i) => 170 + (i % 3) * 30, rotate: (i) => (i % 2 ? 10 : -10), scale: .55, stagger: .03, ease: 'power1.in', duration: 1 })
     .to('.cart', { opacity: 0, stagger: .03, duration: .3 }, .7);
 
   // Marquee speeds up with scroll velocity and flips with direction.
-  const mq = gsap.to('#marquee', { xPercent: -50, repeat: -1, duration: 28, ease: 'none' });
-  ScrollTrigger.create({
+  const mq = $('#marquee') && gsap.to('#marquee', { xPercent: -50, repeat: -1, duration: 28, ease: 'none' });
+  if (mq) ScrollTrigger.create({
     onUpdate: s => {
       const v = gsap.utils.clamp(-6, 6, s.getVelocity() / 300);
       gsap.to(mq, { timeScale: (s.direction === 1 ? 1 : -1) * (1 + Math.abs(v)), duration: .25, overwrite: true });
@@ -78,7 +87,7 @@
   }));
 
   // Horizontal tour on wide screens only; stacked on phones.
-  gsap.matchMedia().add('(min-width: 900px)', () => {
+  if ($('#tourTrack')) gsap.matchMedia().add('(min-width: 900px)', () => {
     {
       const track = document.getElementById('tourTrack');
       const dist = () => track.scrollWidth - innerWidth;
@@ -93,9 +102,11 @@
   });
 
   // Controller stage: phone slides in from the left, window from the right.
+  if (stage) {
   gsap.from('#phone', { x: -80, rotate: -8, opacity: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '#stage', start: 'top 80%', once: true } });
   gsap.from('#qrwin', { x: 80, rotate: 6, opacity: 0, duration: 1, delay: .1, ease: 'power3.out', scrollTrigger: { trigger: '#stage', start: 'top 80%', once: true }, onComplete: drawWire });
   gsap.from('.wire', { opacity: 0, duration: .6, delay: .9, scrollTrigger: { trigger: '#stage', start: 'top 80%', once: true } });
+  }
 
   // Bento cards: hard shadow pops in.
   gsap.utils.toArray('.card').forEach(c => gsap.from(c, { boxShadow: '0px 0px 0 #0E3B26', duration: .6, ease: 'back.out(3)', scrollTrigger: { trigger: c, start: 'top 85%', once: true } }));
@@ -107,7 +118,7 @@
   });
 
   // Final section: icon bobs on scroll.
-  gsap.fromTo('.final .big-icon', { rotate: -12, y: 40 }, { rotate: 6, y: -20, ease: 'none', scrollTrigger: { trigger: '.final', start: 'top bottom', end: 'bottom top', scrub: true } });
+  if ($('.final .big-icon')) gsap.fromTo('.final .big-icon', { rotate: -12, y: 40 }, { rotate: 6, y: -20, ease: 'none', scrollTrigger: { trigger: '.final', start: 'top bottom', end: 'bottom top', scrub: true } });
 
   addEventListener('load', () => ScrollTrigger.refresh());
 })();
